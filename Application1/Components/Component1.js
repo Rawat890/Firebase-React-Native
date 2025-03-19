@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { getDatabase, ref, set } from 'firebase/database'
-import { app } from './firebaseConfig.js';
-
+import { app } from '../firebaseConfig';
 const db = getDatabase(app);
-export default function App() {
+
+function Component1() {
   const putData = () => {
     set(ref(db, 'users/rohan'), {
       id: 1,
@@ -24,9 +24,10 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
 });
+
+export default Component1;
