@@ -12,8 +12,8 @@ const firebaseConfig = {
   storageBucket: "fir-frontend-a9e09.firebasestorage.app",
   messagingSenderId: "726855412935",
   appId: "1:726855412935:web:781d325dc3d595907fa2e2",
-  databaseURL: "https://console.firebase.google.com/project/fir-frontend-a9e09/database/fir-frontend-a9e09-default-rtdb/data/~2F"
+  databaseURL: "https://fir-frontend-a9e09-default-rtdb.firebaseio.com"
 };
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
