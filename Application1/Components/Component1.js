@@ -1,4 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
+//RealTime Database service to the database
+
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { getDatabase, ref, set } from 'firebase/database'
 import { app } from '../firebaseConfig';
