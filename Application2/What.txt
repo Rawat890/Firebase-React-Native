@@ -9,3 +9,160 @@ Correct way of using firebase in react project using context
 7. pass the config file in firebase app
    const firebaseApp = initializeApp(firebaseConfig);
   //firebase app is ready
+
+  Create the context in firebase file 
+  Create the utility functions there that can be used via the context
+
+
+//Google sign in react native
+ "Sign in with Google" authentication in React Native, you can use the React Native Firebase or Expo (if you're using Expo). Here, I'll guide you through the process using React Native Firebase, which is one of the most popular and recommended ways for Firebase authentication, including Google sign-in.
+
+Steps to Set Up Google Sign-In with React Native:
+1. Set Up Firebase Project
+Go to the Firebase Console.
+
+Create a new project or use an existing one.
+
+Enable Google Sign-In in the Firebase Authentication section:
+
+In the Firebase Console, navigate to Authentication > Sign-in method.
+
+Enable Google and configure it.
+
+2. Install Dependencies
+First, install the necessary libraries:
+
+bash
+Copy code
+npm install @react-native-firebase/app @react-native-firebase/auth react-native-google-signin
+Then, if you haven't done it yet, link the libraries (for older React Native versions):
+
+bash
+Copy code
+npx react-native link
+Or, if you're using Expo, you can use expo-google-auth-session instead of react-native-google-signin.
+
+3. Configure Firebase for iOS and Android
+For both Android and iOS, you must configure the Firebase project to work with your app.
+
+For Android:
+
+Download the google-services.json file from Firebase Console and add it to your Android app under android/app.
+
+Add the following in your android/build.gradle:
+
+gradle
+Copy code
+classpath 'com.google.gms:google-services:4.3.3'  // In the dependencies section
+Then, in android/app/build.gradle, add:
+
+gradle
+Copy code
+apply plugin: 'com.google.gms.google-services'
+For iOS:
+
+Download the GoogleService-Info.plist from Firebase Console and add it to the ios/ directory in your project.
+
+Make sure to use CocoaPods to install dependencies:
+
+bash
+Copy code
+cd ios
+pod install
+4. Set Up Google Sign-In on Firebase Console
+In the Firebase Console, go to the Authentication section and enable Google as a sign-in provider.
+
+For Android, you need to configure your SHA-1 key (for Android's security) and your OAuth client ID in the Google Cloud Console.
+
+For iOS, you need to set up a reverse client ID.
+
+5. Implement Google Sign-In in Your App
+In your React Native app, you can now implement Google Sign-In.
+
+Example:
+
+js
+Copy code
+import React, { useEffect } from 'react';
+import { Button, View, Text } from 'react-native';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
+
+GoogleSignin.configure({
+  webClientId: 'YOUR_WEB_CLIENT_ID_FROM_FIREBASE',  // Find this in your Firebase Console
+});
+
+const App = () => {
+  const [user, setUser] = React.useState(null);
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const currentUser = await GoogleSignin.signInSilently();
+      if (currentUser) {
+        setUser(currentUser);
+      }
+    };
+    checkUser();
+  }, []);
+
+  const signInWithGoogle = async () => {
+    try {
+      const { idToken } = await GoogleSignin.signIn();
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      await auth().signInWithCredential(googleCredential);
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // User cancelled the login flow
+        console.log('User cancelled the login flow');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // Operation is in progress
+        console.log('Operation is in progress');
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // Play services are not available or outdated
+        console.log('Play services not available');
+      } else {
+        console.error(error);
+      }
+    }
+  };
+
+  const signOut = async () => {
+    try {
+      await auth().signOut();
+      await GoogleSignin.signOut();
+      setUser(null);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    <View>
+      {user ? (
+        <View>
+          <Text>Welcome {user.user.name}</Text>
+          <Button title="Sign Out" onPress={signOut} />
+        </View>
+      ) : (
+        <Button title="Sign In with Google" onPress={signInWithGoogle} />
+      )}
+    </View>
+  );
+};
+
+export default App;
+6. Handle User Authentication
+After the user signs in with Google, Firebase will handle the authentication and give you the signed-in user’s information. You can then use this information in your app (like displaying their name or email).
+
+Notes:
+Google Sign-In requires a valid webClientId, which you can find in the Firebase Console under Authentication > Sign-in method > Google.
+
+Ensure that you handle sign-out properly and check for an existing user session when the app launches.
+
+For iOS, you might also need to:
+Make sure the url schemes are correctly set in the Info.plist for Firebase authentication and Google Sign-In.
+
+That’s it! Now you have the Google Sign-In authentication working in your React Native app with Firebase. Let me know if you need help with something else!
+
+
+

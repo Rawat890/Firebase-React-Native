@@ -12,9 +12,23 @@ function Input({ label, placeholder, style, keyboard, onEnterText, value }) {
 
 const styles = StyleSheet.create({
   inputContainer: {
-    justifyContent: 'center',
+    flexDirection: 'row',
+    width: '70%',
+    justifyContent: 'space-between',
     alignItems: 'center'
+  },
+  labelText: {
+    fontWeight: 600
+  },
+  input: {
+    borderBottomWidth: 1,
+    width: 160,
+    borderRadius: 10,
+    marginBottom: 20,
+    marginTop: 20,
+    marginLeft: 20
   }
+
 })
 
 export default Input

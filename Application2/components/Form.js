@@ -3,6 +3,7 @@ import { useFirebaseContext } from "../context/firebase.js";
 import Button from "./Button.js";
 import Input from "./Input.js";
 import { View, Text, StyleSheet } from "react-native";
+import GoogleForm from "../GoogleSignIn/GoogleForm.js";
 
 function Form(params) {
   const firebaseHook = useFirebaseContext();
@@ -25,24 +26,33 @@ function Form(params) {
     firebaseHook.signupUserWithEmailAndPassword(email, password)
     setEmail('');
     setPassword('')
+    firebaseHook.submitUserData('usersData/' + 'rohanAdmin', { email, password })
   }
 
   return (
     <View style={styles.container}>
-      <Text >Firebase Application</Text>
+      <Text style={{
+        color: 'orange', fontWeight: 'bold', fontSize: 24, marginBottom: 20, marginTop: 10
+      }}>Email-Google-App</Text>
       <Input placeholder="Enter email...." label="Email-add" onEnterText={emailHandler} value={email} />
       <Input placeholder="Enter password..." label="Password" onEnterText={passwordHandler} value={password} />
-      <Button children="Sign Up" onPress={signupUser} />
+      <GoogleForm />
+      <Button children="SIGN UP" onPress={signupUser} />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    padding: 15,
+    elevation: 5,
+    borderRadius: 10,
+    height: '50%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'yellow'
+    backgroundColor: 'lightgrey',
+    borderWidth: 1,
+    borderColor: 'white'
   }
 })
 

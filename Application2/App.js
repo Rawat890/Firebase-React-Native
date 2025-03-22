@@ -6,6 +6,7 @@ import Form from './components/Form.js';
 export default function App() {
   return (
     <View style={styles.container}>
+      <StatusBar style='light' />
       <FirebaseProvider>
         <Form />
       </FirebaseProvider>
@@ -15,6 +16,9 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'orange'
   },
 });

@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react'
+import { Text } from 'react-native'
 import { initializeApp } from 'firebase/app'
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 import { getDatabase, set, ref } from 'firebase/database'
@@ -12,8 +13,7 @@ const firebaseConfig = {
   storageBucket: "react-native-course-97267.firebasestorage.app",
   messagingSenderId: "920389138562",
   appId: "1:920389138562:web:37d8aa643383eb0d589c9b",
-  measurementId: "G-LCJHX45EC2",
-  databaseURL: 'https://react-native-course-97267-default-rtdb.firebaseio.com'
+  measurementId: "G-LCJHX45EC2"
 };
 
 //app
@@ -48,7 +48,7 @@ export const FirebaseProvider = (props) => {
 
   return (
     <FirebaseContext.Provider value={{ signupUserWithEmailAndPassword, submitUserData }}>
-      {props.children}  //components wrapped in it
+      {props.children}
     </FirebaseContext.Provider>
   )
 }
