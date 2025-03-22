@@ -1,20 +1,49 @@
-import { useFirebaseContext } from "../context/firebase";
-import Button from "./Button";
-import Input from "./Input";
-import { View, Text } from "react-native";
+import { useState } from "react";
+import { useFirebaseContext } from "../context/firebase.js";
+import Button from "./Button.js";
+import Input from "./Input.js";
+import { View, Text, StyleSheet } from "react-native";
 
 function Form(params) {
-  const firebase = useFirebaseContext();
-  console.log(firebase)
+  const firebaseHook = useFirebaseContext();
+  // console.log(firebaseHook)  
+  // gives the utility functions we created
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+
+  const emailHandler = (text) => {
+    setEmail(text)
+
+  }
+  const passwordHandler = (text) => {
+    setPassword(text)
+  }
+
+  const signupUser = () => {
+    firebaseHook.signupUserWithEmailAndPassword(email, password)
+    setEmail('');
+    setPassword('')
+  }
 
   return (
-    <View>
-      <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: 700, marginBottom: 20 }}>Firebase Application</Text>
-      <Input placeholder="Enter email...." label="Email-add" />
-      <Input placeholder="Enter password..." label="Password" />
-      <Button children="Sign Up" />
+    <View style={styles.container}>
+      <Text >Firebase Application</Text>
+      <Input placeholder="Enter email...." label="Email-add" onEnterText={emailHandler} value={email} />
+      <Input placeholder="Enter password..." label="Password" onEnterText={passwordHandler} value={password} />
+      <Button children="Sign Up" onPress={signupUser} />
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'yellow'
+  }
+})
 
 export default Form;
