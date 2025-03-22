@@ -1,23 +1,22 @@
 //Proper Sign Up page
 
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import { TextInput, View, Text, Button, StyleSheet } from "react-native"
 import { app } from "../firebaseConfig.js"
 import { useState } from "react"
 
 const auth = getAuth(app)
 
-function Component3(params) {
+function Component4(params) {
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
   function submitUserInfo() {
-    createUserWithEmailAndPassword(auth, email, password).then(value => console.log("User Created"))
+    signInWithEmailAndPassword(auth, email, password).then(value => console.log("User logged in")).catch(error => console.log('Invalid credentials - ' + error.message))
     setEmail('')
     setPassword('')
   }
-
 
   return (
     <View style={styles.container}>
@@ -33,7 +32,7 @@ function Component3(params) {
           <TextInput style={styles.input} placeholder="Enter password ..." onChangeText={(password) => setPassword(password)} value={password} />
         </View>
       </View>
-      <Button title="Sign Up" onPress={submitUserInfo} />
+      <Button title="Sign In" onPress={submitUserInfo} />
     </View>
   )
 }
@@ -83,4 +82,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default Component3
+export default Component4

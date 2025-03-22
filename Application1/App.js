@@ -3,12 +3,14 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import Component1 from './Components/Component1.js';
 import Component2 from './Components/Component2.js';
 import Component3 from './Components/Component3.js';
+import Component5 from './Components/Component5.js';
 
 export default function App() {
 
   return (
     <View style={styles.container}>
-      <Component3 />
+      <Component2 />
+      <Component5 />
     </View>
   );
 }
@@ -16,7 +18,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'lavender',
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -1,24 +1,28 @@
 //Proper Sign Up page
 
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import { TextInput, View, Text, Button, StyleSheet } from "react-native"
 import { app } from "../firebaseConfig.js"
 import { useState } from "react"
 
 const auth = getAuth(app)
+const googleProvider = new GoogleAuthProvider()  //1. create it
 
-function Component3(params) {
+function Component5(params) {
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
   function submitUserInfo() {
-    createUserWithEmailAndPassword(auth, email, password).then(value => console.log("User Created"))
+    signInWithEmailAndPassword(auth, email, password).then(value => console.log("User logged in")).catch(error => console.log('Invalid credentials - ' + error.message))
     setEmail('')
     setPassword('')
   }
 
 
+  function signUp() {
+    signInWithPopup(auth, googleProvider).then(value => console.log(value)).catch(error => console.log('Invalid credentials - ' + error.message));
+  }
   return (
     <View style={styles.container}>
       <Text style={[styles.text, { marginBottom: 20, marginTop: 10, fontSize: 20 }]}>Sign Up Form</Text>
@@ -33,7 +37,7 @@ function Component3(params) {
           <TextInput style={styles.input} placeholder="Enter password ..." onChangeText={(password) => setPassword(password)} value={password} />
         </View>
       </View>
-      <Button title="Sign Up" onPress={submitUserInfo} />
+      <Button title="Sign up with GOOGLE" onPress={signUp} />
     </View>
   )
 }
@@ -83,4 +87,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default Component3
+export default Component5;
