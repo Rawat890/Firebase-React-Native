@@ -1,0 +1,11 @@
+Correct way of using firebase in react project using context
+
+1. Create app in Firebase
+2. npm install Firebase
+3. Create firebaseContext and provide it null value as default
+4. initialize the app using import
+5. warp the components in firebaseContext.Provider
+6. Get the config file of the firebase in firebase.js
+7. pass the config file in firebase app
+   const firebaseApp = initializeApp(firebaseConfig);
+  //firebase app is ready
